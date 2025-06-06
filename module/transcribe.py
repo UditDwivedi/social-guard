@@ -3,10 +3,10 @@ import subprocess
 import assemblyai as aai
 
 
-def download_youtube_audio(youtube_url, output_path="audio.mp3",i=0):
+def download_youtube_audio(youtube_url, i=0):
     try:
         print(f"Downloading audio from: {youtube_url}")
-        output_path=f"{i}{output_path}"
+        output_path=f"files/{i}audio.mp3"
         
         command = [
             "yt-dlp",
@@ -41,16 +41,15 @@ def transcribe_audio(file_path):
             return transcript.text
     except Exception as e:
         print(f"Error in transcription: {e}")
-        return None
+        return 'None'
 
 # Main Function
 
 def transcript(url,i):
     youtube_url = url
-    audio_path = "downloaded_audio.mp3"
 
     # Download YouTube audio
-    audio_file = download_youtube_audio(youtube_url, audio_path,i)
+    audio_file = download_youtube_audio(youtube_url,i)
     print("downloaded file:",audio_file)
     if audio_file:
         transcript = transcribe_audio(audio_file)
@@ -59,6 +58,7 @@ def transcript(url,i):
             print("Transcript:")
             print(transcript)
             tt=transcript
+            os.remove(audio_file)
             return tt
 
 '''

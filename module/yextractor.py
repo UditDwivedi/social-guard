@@ -52,13 +52,12 @@ def channelData(channel_id):
         print(f"Error fetching metadata for channel {channel_id}: {e}")
         return None, None, None, None, None, None
 
-def video_info(hashtag, latitude, longitude, radius='50km', max_results=10, start_date=None, end_date=None, csv_filename="video_data.csv"):
+def video_info(video_data_file, hashtag, latitude, longitude, radius='50km', max_results=10, start_date=None, end_date=None):
     try:
         next_page_token = None
-        video_count = 0  # Track the total number of videos processed
-
-        # Save to CSV file
-        with open(csv_filename, mode='w', newline='', encoding='utf-8') as csvfile:
+        video_count = 0  
+        
+        with open(video_data_file, mode='w', newline='', encoding='utf-8') as csvfile:
             fieldnames = [
                 'Video Title', 'Description', 'Video URL', 'Published At',
                 'Channel Title', 'Channel ID', 'Channel Description', 'Subscriber Count',

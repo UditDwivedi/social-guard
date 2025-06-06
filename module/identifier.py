@@ -7,8 +7,6 @@ client = OpenAI(
 
 def validator(transcribed_text,user_content):
 
-
-
     a=prompt = (
         "You are an AI tasked with analyzing and evaluating content alignment. Below are summaries of a YouTube video transcription and a news article on a similar topic. "
         "Your tasks are:\n"
@@ -16,13 +14,13 @@ def validator(transcribed_text,user_content):
         "2. Assess the overall accuracy of the YouTube video summary based on the news article summary.\n"
         "3. You can Your understand also .\n"
         "4. Provide your evaluation as one of the following:\n"
-        "   - **Green**: The YouTube video summary is highly accurate and aligns well with the news article summary.\n"
-        "   - **Yellow**: The YouTube video summary is partially accurate but misses some key points or includes minor discrepancies.\n"
+        "   - **Green**: The YouTube video summary aligns well with the news article summary.\n"
+        "   - **Yellow**: The YouTube video summary is misses some key points or includes minor discrepancies.\n"
         "   - **Red**: The YouTube video summary contains major inaccuracies or contradictions with the news article summary.\n"
         "Only respond with Green, Blue, or Red, without any explanation..\n\n"
         "Here are the inputs:\n\n"
-        f"YouTube Video Summary:\n\"{transcribed_text}\"\n\n"
-        f"News Article Summary:\n\"{user_content}\""
+        f"YouTube Video Summary:\n\"{str(transcribed_text)}\"\n\n"
+        f"News Article Summary:\n\"{str(user_content)}\""
     )
     completion = client.chat.completions.create(
         model="meta/llama3-70b-instruct",
