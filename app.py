@@ -12,12 +12,17 @@ forensic_status_file = os.path.join("files","forensic_data.csv")
 account_report_file = os.path.join("files","account_report.csv")
 
 if request_form(video_data_file) or os.path.exists(video_data_file):
+    if st.button("Reset"):
+        print("Resetting")
+        for file in os.listdir("files"):
+            print("Removing:",file)
+            os.remove(f"files/{file}")
+        st.session_state.clear()
+        st.rerun()
+    
     content_forensics(video_data_file,forensic_status_file, account_report_file)
     account_report(account_report_file)
 
-    if st.button("Reset"):
-        for file in os.listdir("files"):
-            os.remove(f"files/{file}")
         
         # for key in st.session_state.keys():
         #     del key

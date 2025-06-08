@@ -113,3 +113,8 @@ for news in get_news_list(query):
      print()
 
 '''
+
+test_query = "nuclear reactor remote locations mining off-grid"
+
+if __name__ == "__main__":
+    print(get_news_list(test_query))

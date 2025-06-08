@@ -53,12 +53,10 @@ def transcript(url,i):
     print("downloaded file:",audio_file)
     if audio_file:
         transcript = transcribe_audio(audio_file)
-        print("got transcript")
         if transcript:
-            print("Transcript:")
-            print(transcript)
             tt=transcript
-            os.remove(audio_file)
+            if os.path.exists(audio_file):
+                os.remove(audio_file)
             return tt
 
 '''
@@ -76,3 +74,40 @@ if __name__ == "__main__":
             print("Transcript:")
             print(transcript)
 '''
+
+# from youtube_transcript_api import YouTubeTranscriptApi
+# from deep_translator import GoogleTranslator
+
+# def transcript(url:str) -> str:
+#     video_id = url.split('watch?v=')[-1]
+#     print("Transcribing :"+video_id)
+#     try:
+#         # all_transcripts = YouTubeTranscriptApi.list_transcripts(video_id)
+#         # # print(f"Available transcripts: {all_transcripts}")
+#         # available_langs = [t.language_code for t in all_transcripts]
+#         # transcript_obj = all_transcripts.find_transcript(available_langs)
+#         # transcript = transcript_obj.fetch()
+
+#         # # print(transcript)
+#         # # for snippet in transcript:
+#         # #     print(snippet.text)
+#         fetched_transcript = YouTubeTranscriptApi().fetch(video_id)
+#         print(fetched_transcript)
+#         raw_text = " ".join(entry.text for entry in fetched_transcript)
+#         return raw_text
+
+#         # transcript_lang = transcript_obj.language_code
+
+#         # if transcript_lang != 'en':
+#         #     try:
+#         #         translated_text = GoogleTranslator(source='auto', target='en').translate(raw_text)
+#         #         return translated_text
+#         #     except Exception as e:
+#         #         return ""
+#         # else:
+#         #     return raw_text
+
+
+
+#     except Exception as e:
+#         return ""

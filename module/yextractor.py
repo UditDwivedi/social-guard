@@ -1,6 +1,7 @@
 # FULL WORKING 
 
 import csv
+import os
 from googleapiclient.discovery import build
 from datetime import datetime
 
@@ -29,7 +30,7 @@ def videoData(video_id):
         print(f"Error fetching statistics for video {video_id}: {e}")
         return None, None, None, None
 
-def channelData(channel_id):
+def channelData(channel_id):    
     try:
         request = youtube.channels().list(
             part="snippet,statistics",
@@ -55,7 +56,9 @@ def channelData(channel_id):
 def video_info(video_data_file, hashtag, latitude, longitude, radius='50km', max_results=10, start_date=None, end_date=None):
     try:
         next_page_token = None
-        video_count = 0  
+        video_count = 0
+
+        
         
         with open(video_data_file, mode='w', newline='', encoding='utf-8') as csvfile:
             fieldnames = [
@@ -78,6 +81,7 @@ def video_info(video_data_file, hashtag, latitude, longitude, radius='50km', max
                     pageToken=next_page_token,
                     publishedAfter=start_date.strftime('%Y-%m-%dT%H:%M:%SZ') if start_date else None,
                     publishedBefore=end_date.strftime('%Y-%m-%dT%H:%M:%SZ') if end_date else None,
+                    videoDuration='short',
                 )
                 response = request.execute()
 

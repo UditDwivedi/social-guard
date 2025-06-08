@@ -1,3 +1,5 @@
+import json
+import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -46,6 +48,9 @@ def request_form(video_data_file):
     global hashtag, city, radius, start_date, end_date, max_results, chart_type, search_status, progress_bar
     # st.set_page_config(page_title="Social-guard", layout="wide", initial_sidebar_state="expanded")
 
+    if not os.path.exists("files"):
+        os.makedirs("files")
+
     st.title("YouTube Channel Dashboard")
 
     st.subheader("Fetch YouTube Video and Channel Data")
@@ -57,6 +62,19 @@ def request_form(video_data_file):
         end_date = st.date_input("End date", value=datetime(2024, 9, 15))
         max_results = st.number_input("Maximum results to fetch:", min_value=1, max_value=50, value=4)
         chart_type = st.selectbox("Select a chart type", ["Bar", "Line", "Area"])
+
+        with open(os.path.join("files","query.json"), "w") as jsonfile:
+            json.dump(
+                {
+                    "hastag":hashtag,
+                    "city":city,
+                    "radius":radius,
+                    "start_date":str(start_date),
+                    "end_date":str(end_date),
+                    "max_results":max_results
+                },
+                jsonfile
+            )
 
         submitted = st.form_submit_button("Search")
 
