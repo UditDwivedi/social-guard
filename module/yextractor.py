@@ -4,9 +4,9 @@ import csv
 import os
 from googleapiclient.discovery import build
 from datetime import datetime
+import streamlit as st
 
-
-api_key = 'AIzaSyBylPF1Q90A3sHD3rc4DxlRIAxbQKweOnY'
+api_key = st.secrets["YOUTUBE_API_KEY"]
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 def videoData(video_id):
