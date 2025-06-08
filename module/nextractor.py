@@ -114,7 +114,7 @@ for news in get_news_list(query):
 
 '''
 
-test_query = "nuclear reactor remote locations mining off-grid"
+test_query = "nuclear energy data centers artificial intelligence"
 
 if __name__ == "__main__":
     print(get_news_list(test_query))

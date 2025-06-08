@@ -5,7 +5,7 @@ summarizer_prompt = '''
 You are Video summarizer which focuses on the important details in less than 200 words. 
 You need to get 2-4 tags about the content which it targets.
 Your response needs to follow the format:
-space,planets,size,earth<EndOfTags>Among the solar planets in space, Jupiter is the largest.
+space,planets,size<EndOfTags>Among the solar planets in space, Jupiter is the largest.
 Text to Summarize:
 '''
 

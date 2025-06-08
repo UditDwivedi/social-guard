@@ -11,7 +11,7 @@ def account_report(account_report_file):
         st.title("Account Report")
         st.header("Account Analysis Report")
         st.write(df)
-
+        print(df)
 
 
 
@@ -25,7 +25,10 @@ def account_report(account_report_file):
                 st.error("Please select at least one status.")
             else:
                 # Filter the data based on the selected statuses
-                data = df[df['Status'].isin(c)]
+                print(c)
+                print(df["Status"])
+                data = df[df['Status'].isin(pd.Series(c))]
+                print(data)
 
                 # Display the filtered data as a table
                 st.subheader("Filtered Data")
@@ -35,8 +38,9 @@ def account_report(account_report_file):
                 # Count the occurrences of each status
                 status_counts = data['Status'].value_counts().reset_index()
                 status_counts.columns = ['Status', 'Count']
-                color_scale = alt.Scale(domain=["Red", "Green", "Yellow"], range=["red", "green", "Yellow"])
+                color_scale = alt.Scale(domain=["Red", "Green", "Yellow"], range=["Red", "Green", "Yellow"])
 
+                print(status_counts)
 
                 # Create an Altair chart to visualize the counts of each status
                 chart = (

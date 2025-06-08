@@ -42,8 +42,8 @@ def content_forensics(video_data_file, forensic_data_file, account_report_file):
 
     forensic_data = load_data(forensic_data_file)
 
-    with open(os.path.join("files","query.json"), "r") as jsonfile:
-        query:dict = json.load(jsonfile)
+    # with open(os.path.join("files","query.json"), "r") as jsonfile:
+    #     query:dict = json.load(jsonfile)
 
     k=-1
     Finalaclist=[]
@@ -63,6 +63,17 @@ def content_forensics(video_data_file, forensic_data_file, account_report_file):
         st.write("**************************************")
         st.write("Video Title")
         st.write(video_title)
+
+        if forensic_data.at[k,'Validate'] != 'pending':
+            print("Already validated")
+            st.markdown("### Summary")
+            st.write("Video Summary")
+            st.write(forensic_data.at[k,'ContentSum'])
+            st.write("News Summary")
+            st.write(forensic_data.at[k,'News'])
+            st.write(forensic_data.at[k,'Validate'])
+            Finalaclist.append(forensic_data.at[k,'Validate'])
+            continue
         
 
         content = transcript(video_link,k)
@@ -98,7 +109,7 @@ def content_forensics(video_data_file, forensic_data_file, account_report_file):
 
             contentsumwhole = summarize(video_title +':' + content)
             # print("Content Summay", contentsumwhole, sep="\n") 
-            contenttags = forensic_data.at[k,'ContentTags'] = contentsumwhole[0].replace(',',' ') + ' ' + query.get('city','')
+            contenttags = forensic_data.at[k,'ContentTags'] = contentsumwhole[0].replace(',',' ')
             contentsum = forensic_data.at[k,'ContentSum'] = contentsumwhole[1]
         else:
             contentsum = forensic_data.at[k,'ContentSum']
@@ -147,6 +158,8 @@ def content_forensics(video_data_file, forensic_data_file, account_report_file):
         state = ""
         if forensic_data.at[k,'Validate'] == 'pending':
             state = validator(contentsum,newssum)
+            if(state[-1] == '\n'):
+                state = state[:-1]
             forensic_data.at[k,'Validate'] = state
         else:
             state = forensic_data.at[k,'Validate']
@@ -161,12 +174,13 @@ def content_forensics(video_data_file, forensic_data_file, account_report_file):
     forensic_data.to_csv(forensic_data_file,index=False)
 
 
+
     data={
         'Video Title':video_titles,
         'Video Link':video_Links,
         'Status':Finalaclist
     }
-
+    print(data)
     df2 = pd.DataFrame(data)
 
     # Specify the file name
